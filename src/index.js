@@ -1,15 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './layout';
-import * as serviceWorker from './serviceWorker';
-import 'antd/dist/antd.css'; 
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import RouterIndex from "./route";
+import * as serviceWorker from "./serviceWorker";
+import "antd/dist/antd.css";
+import { ApolloProvider } from "react-apollo";
+import createClient from "./apollo/client";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+const client = createClient()
+
+ReactDOM.hydrate(
+  <ApolloProvider client={client} >
+    <RouterIndex />
+  </ApolloProvider>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

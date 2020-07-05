@@ -1,20 +1,33 @@
 // import proxy from 'express-http-proxy'
-import React from 'react'
+import React from "react";
 import { renderToString } from "react-dom/server";
-import Layout from '../src/layout'
-const express = require('express')
-var bodyParser = require('body-parser')
-const rp = require('request-promise-native')
+import MLayout from "../src/layout";
+import getXWebContent from './menu'
+const express = require("express");
+var bodyParser = require("body-parser");
+const rp = require("request-promise-native");
+const path = require("path");
+const fs = require("fs");
 
+const template = fs.readFileSync(
+  path.resolve(__dirname, "../build/index.html"),
+  "utf8"
+);
 
-const app = express()
+const app = express();
 app.use(bodyParser.json());
 
-app.use(express.static('build'))
+app.use(express.static("build"));
 
-app.get('/content', async (req, res) => {
-  const data = await rp('http://localhost:3777/content')
-  res.send(renderToString(<Layout>{<div dangerouslySetInnerHTML={{ __html: data }}></div>}</Layout>))
-})
+app.use(async (req, res) => {
+  if (/text\/html/.test(req.headers.accept)) {
+    const url = getXWebContent(req.path);
+    const data = await rp(`${url}/xWebContent?path=${req.path}`);
+    const mainContent = renderToString(
+      <MLayout>{<div id="x-web" dangerouslySetInnerHTML={{ __html: data }}></div>}</MLayout>
+    );
+    res.end(template.replace(/<div id="root"><\/div>/, `<div id="root">${mainContent}</div>`));
+  }
+});
 
-app.listen(3888)
+app.listen(3888);
