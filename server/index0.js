@@ -139,7 +139,6 @@ app.use(async (req, res, next) => {
           columnNumber: 9
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "x-web",
         dangerouslySetInnerHTML: {
           __html: data
         },

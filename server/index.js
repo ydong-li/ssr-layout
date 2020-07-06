@@ -27,7 +27,7 @@ app.use(async (req, res, next) => {
       const data = await rp(`${url}/xWebContent?path=${req.path}`);
       const mainContent = renderToString(
         <MLayout>
-          {<div id="x-web" dangerouslySetInnerHTML={{ __html: data }}></div>}
+          {<div dangerouslySetInnerHTML={{ __html: data }}></div>}
         </MLayout>
       );
       res.end(
