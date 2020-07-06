@@ -1,7 +1,7 @@
 // webpack/webpack.dev.config.js
 //webpack 配置文件
 const path = require('path');
-// const nodeExternals = require('webpack-node-externals');
+const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const resolvePath = (pathStr) => path.resolve(__dirname, pathStr);
 //构建前清理目录
@@ -22,7 +22,7 @@ module.exports = {
     path: resolvePath('./'),
   },
   devtool: "source-map",
-  // externals: [nodeExternals()],
+  externals: [nodeExternals()],
   module: {
     rules: [
       {
