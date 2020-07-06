@@ -1,5 +1,5 @@
 const menuConfig = {
-  'http://localhost:3777': ['/b', '/c']
+  'http://localhost:3777': ['/x-web/b', '/x-web/c', '/p']
 }
 
 export default function getXWebContent(path) {
